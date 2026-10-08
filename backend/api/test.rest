@@ -1,0 +1,10 @@
+POST http://127.0.0.1:8000/api/transaction/
+Content-Type: application/json
+
+{
+    "text": "Salaire Août",
+    "amount": 2000.00
+}
+
+###
+GET http://127.0.0.1:8000/api/transaction/

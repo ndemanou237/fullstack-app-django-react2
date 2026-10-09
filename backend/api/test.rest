@@ -8,3 +8,24 @@ Content-Type: application/json
 
 ###
 GET http://127.0.0.1:8000/api/transaction/
+
+###
+DELETE http://127.0.0.1:8000/api/transaction/02600145-929c-4d0a-acdd-335ee6bd077d/
+
+###
+PUT DELETE http://127.0.0.1:8000/api/transaction/e5a23cbb-dc5d-4d66-b055-a004807869f6/
+Content-Type: application/json
+
+{
+    "text": "Salaire octobre",
+    "amount": 12343.12
+}
+
+###
+PATCH  DELETE http://127.0.0.1:8000/api/transaction/e5a23cbb-dc5d-4d66-b055-a004807869f6/
+Content-Type: application/json
+
+{
+    
+    "amount": 12343.12
+}

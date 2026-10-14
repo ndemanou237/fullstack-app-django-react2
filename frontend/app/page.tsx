@@ -38,6 +38,27 @@ export default function Home() {
     
   }
 
+  const deleteTransaction = async (id: string) => {
+    try{
+      await api.delete(`transactions/${id}`)
+      getTransactions()
+      toast.success("Transactions supprimé avec success")
+
+    } catch (error: any) {
+  if (error.response) {
+    // Le serveur a répondu avec un code statut hors de la plage 2xx
+    console.log("Données d'erreur du backend :", error.response.data);
+    console.log("Statut HTTP :", error.response.status);
+  } else if (error.request) {
+    // La requête a été envoyée mais aucune réponse n'a été reçue (CORS ou serveur éteint)
+    console.log("Aucune réponse du serveur :", error.request);
+  } else {
+    // Erreur lors de la configuration de la requête
+    console.log("Erreur de configuration :", error.message);
+  }
+  toast.error("Erreur suppression transaction");
+}
+
   useEffect(() => {
       getTransactions()
     }, []);
@@ -145,7 +166,11 @@ export default function Home() {
           {formatDate(t.created_at)}
         </td>
         <td>
-          <button className="btn btn-sm btn-error btn-soft" title="supprimer">
+          <button 
+            onClick={() => deleteTransaction(t.id) } 
+            className="btn btn-sm btn-error btn-soft" 
+            title="supprimer"
+          >
             <Trash className="w-4 h-4"/>
           </button>
         </td>
@@ -158,4 +183,5 @@ export default function Home() {
     </div>
   );
 
+}
 }

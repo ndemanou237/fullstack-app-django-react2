@@ -3,7 +3,7 @@
 import { Activity, useEffect, useState } from "react";
 import api from "./api";
 import toast from "react-hot-toast";
-import { ActivityIcon, ArrowDownCircle, ArrowUpCircle, Trash, TrendingDown, TrendingUp, Wallet } from "lucide-react";
+import { ActivityIcon, ArrowDownCircle, ArrowUpCircle, PlusCircle, Trash, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 
 type Transaction = {
   id: string;
@@ -14,6 +14,8 @@ type Transaction = {
 
 export default function Home() {
   const [transaction, setTransactions] = useState<Transaction[]>([])
+  const [text, setText] = useState<string>("")
+  const [amount, setAmount] = useState<number | "">("");
   const getTransactions = async () => {
     try{
       const res = await api.get<Transaction[]>("transactions/")
@@ -133,6 +135,14 @@ export default function Home() {
         </progress>
       </div>
 
+            {/* You can open the modal using document.getElementById('ID').showModal() method */}
+      <button className="btn btn-warning" 
+      onClick={()=> (document.getElementById('my_modal_3') as HTMLDialogElement).showModal()}>
+        <PlusCircle className="w-4 h-4"/>
+        Ajouter une transaction
+      </button>
+      
+
       <div className="overflow-x-auto rounded-2xl border-2 border-warning/10 border-dashed bg-warning/5">
   <table className="table">
     {/* head */}
@@ -179,7 +189,30 @@ export default function Home() {
       
     </tbody>
   </table>
-</div>
+      </div>
+      <dialog id="my_modal_3" className="modal backdrop-blur">
+        <div className="modal-box border-2 border-warning/10 border-dashed">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+          <h3 className="font-bold text-lg">Ajouter une transaction</h3>
+
+          <div className="flex flex-col gap-4 mt-4">
+            <div className="flex flex-col gap-2">
+              <label className="label">Texte</label>
+              <input 
+                type="text"   
+                name="text" 
+                value={text} 
+                onChange={(e) => setText(e.target.value)} />
+                placeholder="Entrez le texte..."
+                className="input w-full"
+            </div>
+          </div>
+          
+        </div>
+      </dialog>
     </div>
   );
 
